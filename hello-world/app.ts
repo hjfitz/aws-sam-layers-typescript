@@ -1,27 +1,22 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import fs from 'fs'
+import {verifyPassword} from '/opt/nodejs/handler'
 
 
 export async function lambdaHandler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-	const files = fs.readdirSync('/opt/nodejs')
-	console.log({files})
-    let response: APIGatewayProxyResult;
-    try {
-        response = {
+	if (verifyPassword(event.queryStringParameters?.pass ?? '')) {
+        return {
             statusCode: 200,
             body: JSON.stringify({
-                message: 'hello world',
+                message: 'welcome!',
             }),
-        };
-    } catch (err) {
-        console.log(err);
-        response = {
+        }
+    } else {
+        return {
             statusCode: 500,
             body: JSON.stringify({
-                message: 'some error happened',
+                message: 'you cannot pass!',
             }),
-        };
+        }
     }
-
-    return response;
 }

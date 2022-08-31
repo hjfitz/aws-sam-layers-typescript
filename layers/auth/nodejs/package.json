@@ -5,5 +5,11 @@
   "main": "index.js",
   "author": "Harry Fitzgerald <harry.fitzgerald@rs-comoponents.com",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "build": "tsc --pretty"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.2"
+  }
 }
